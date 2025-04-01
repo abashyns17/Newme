@@ -12,15 +12,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
+	
 		<!-- Google Tag Manager -->
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-WJL8DJWH');</script>
+		<script>
+			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-WJL8DJWH');
+		</script>
 		<!-- End Google Tag Manager -->
-
+	
 		<!-- Hotjar Tracking Code for Site 5273027 (newme) -->
 		<script>
 			(function(h,o,t,j,a,r){
@@ -32,7 +34,37 @@
 				a.appendChild(r);
 			})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 		</script>
-	</head>
+	
+		<!-- Meta Pixel Code -->
+		<script>
+			!function(f, b, e, v, n, t, s) {
+				if (f.fbq) return;
+				n = f.fbq = function() {
+					n.callMethod ?
+						n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+				};
+				if (!f._fbq) f._fbq = n;
+				n.push = n;
+				n.loaded = !0;
+				n.version = '2.0';
+				n.queue = [];
+				t = b.createElement(e);
+				t.async = !0;
+				t.src = v;
+				s = b.getElementsByTagName(e)[0];
+				s.parentNode.insertBefore(t, s)
+			}(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+	
+			fbq('init', '1202788814784843');
+			fbq('track', 'PageView');
+		</script>
+	
+		<noscript>
+			<img height="1" width="1" style="display:none"
+				 src="https://www.facebook.com/tr?id=1202788814784843&ev=PageView&noscript=1" />
+		</noscript>
+		<!-- End Meta Pixel Code -->
+	</head>	
 	<body class="landing is-preload">
 
 		<!-- Page Wrapper -->
@@ -91,7 +123,7 @@
 								<h2>Strzyżenie</h2>
 								<p>Nasi eksperci fryzjerzy oferują precyzyjne strzyżenia, które odzwierciedlają Twój osobisty styl. Niezależnie od tego, czy chcesz odświeżyć swój wygląd, czy po prostu podciąć włosy, NewMe zapewnia, że Twoja fryzura będzie idealnie dopasowana do Ciebie.</p>
 								<ul class="actions stacked">
-									<li><a href="services.html#Hair" class="button fit primary">Zobacz Usługi</a></li>
+									<li><a href="services.html#Haircut" class="button fit primary">Zobacz Usługi</a></li>
 								</ul>
 							</div>
 						</section>
@@ -100,7 +132,7 @@
 								<h2>Koloryzacja Włosów</h2>
 								<p>W NewMe używamy najwyższej jakości produktów, aby stworzyć żywe, trwałe kolory. Niezależnie od tego, czy chcesz subtelny, czy odważny kolor, nasi eksperci od koloryzacji znajdą dla Ciebie idealny odcień, pozostawiając Twoje włosy promienne i zdrowe.</p>
 								<ul class="actions stacked">
-									<li><a href="services.html#Hair" class="button fit primary">Zobacz Usługi</a></li>
+									<li><a href="services.html#Haircolor" class="button fit primary">Zobacz Usługi</a></li>
 								</ul>
 							</div>
 						</section>
