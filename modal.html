@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Modal with Validation and Loader</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <style>
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .modal-content {
+      background: #2e2f34;
+      padding: 2rem 2.5rem;
+      border-radius: 0.5rem;
+      max-width: 400px;
+      width: 90%;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 0 2em rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .modal-content input[type="text"] {
+      width: 100%;
+      margin-bottom: 0.75rem;
+      background-color: #3b3c40;
+      border: none;
+      padding: 0.75rem;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+    }
+
+    .modal-content .actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #thankYouModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10001;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #thankYouBox {
+      background: #2e2f34;
+      padding: 2rem 2.5rem;
+      border-radius: 0.5rem;
+      max-width: 400px;
+      width: 90%;
+      color: #fff;
+      font-size: 1.1rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .error {
+      color: #f56a6a;
+      font-size: 0.9rem;
+      margin-top: -0.5rem;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body class="is-preload">
+  <div id="page-wrapper">
+    <section class="wrapper style5">
+      <div class="inner" style="text-align: center;">
+        <h2>Modal Demo</h2>
+        <ul class="actions" style="justify-content: center;">
+          <li><a href="#" class="button primary" onclick="openModal()">Open Modal</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal Form -->
+  <div id="modal" class="modal-overlay">
+    <div class="modal-content">
+      <a href="#" class="close-button" onclick="closeModal()">✖</a>
+      <h3>Contact Us</h3>
+      <form id="modalForm" onsubmit="submitModal(); return false;">
+        <input type="text" name="input1" placeholder="Your Name" />
+        <div id="error-name" class="error" style="display:none;">Name is required</div>
+        <input type="text" name="input2" placeholder="Your Phone (+123...)" />
+        <div id="error-phone" class="error" style="display:none;">Valid phone is required (e.g. +380123456789)</div>
+        <div class="actions">
+          <input type="submit" value="Submit" class="button primary" id="submitBtn" />
+          <a href="#" class="button" onclick="secondaryAction()">Secondary</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Thank You Modal -->
+  <div id="thankYouModal" class="modal-overlay">
+    <div id="thankYouBox">
+      Thank you for your submission, we'll get back to you.
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function openModal() {
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    function secondaryAction() {
+      alert("Secondary action clicked.");
+    }
+
+    function submitModal() {
+      const nameInput = document.querySelector('input[name="input1"]');
+      const phoneInput = document.querySelector('input[name="input2"]');
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const service = 'Web Contact Form';
+      const submitBtn = document.getElementById('submitBtn');
+      const form = document.getElementById('modalForm');
+
+      // Validation
+      let valid = true;
+      const phoneRegex = /^\+?[0-9]{7,15}$/;
+
+      document.getElementById('error-name').style.display = name ? 'none' : 'block';
+      document.getElementById('error-phone').style.display = phoneRegex.test(phone) ? 'none' : 'block';
+
+      if (!name || !phoneRegex.test(phone)) {
+        return;
+      }
+
+      // Disable button + show loading
+      submitBtn.value = 'Submitting...';
+      submitBtn.classList.add('loading');
+
+      fetch('https://pacific-kindness-production.up.railway.app/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, service })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showThankYouModal();
+          form.reset();
+        } else {
+          alert('Error: ' + (data.error || 'Unknown'));
+        }
+      })
+      .catch(() => alert('Network or server error'))
+      .finally(() => {
+        submitBtn.value = 'Submit';
+        submitBtn.classList.remove('loading');
+      });
+    }
+
+    function showThankYouModal() {
+      closeModal();
+      const overlay = document.getElementById('thankYouModal');
+      const box = document.getElementById('thankYouBox');
+      overlay.style.display = 'flex';
+      box.style.opacity = 0;
+
+      let opacity = 0;
+      const fadeIn = setInterval(() => {
+        if (opacity >= 1) {
+          clearInterval(fadeIn);
+          setTimeout(() => {
+            const fadeOut = setInterval(() => {
+              if (opacity <= 0) {
+                clearInterval(fadeOut);
+                overlay.style.display = 'none';
+              }
+              opacity -= 0.05;
+              box.style.opacity = opacity;
+            }, 30);
+          }, 2000);
+        } else {
+          opacity += 0.05;
+          box.style.opacity = opacity;
+        }
+      }, 30);
+    }
+  </script>
+</body>
+</html>
