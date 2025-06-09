@@ -1,0 +1,68 @@
+/* Base Swiper container */
+.swiper {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4; /* Adjust this based on your image shape */
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Swiper slide image */
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Change to 'contain' to avoid cropping */
+  display: block;
+  border-radius: 0.5rem;
+}
+
+/* Pagination dots */
+.swiper-pagination-bullet {
+  background: #888;
+  opacity: 1;
+  transition: background 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #f04f78;
+}
+
+/* Navigation arrows */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #f04f78;
+  width: 2rem;
+  height: 2rem;
+  transition: transform 0.2s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  transform: scale(1.15);
+}
+
+/* Responsive helper (optional) */
+@media screen and (max-width: 768px) {
+  .swiper {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+
+/* Make the carousel column match the height of the text column */
+#Manicure .row {
+  display: flex;
+  align-items: stretch;
+}
+
+#Manicure .col-4 {
+  display: flex;
+  flex-direction: column;
+}
+
+#Manicure .swiper {
+  flex-grow: 1;
+  height: 100%;
+}
